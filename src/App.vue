@@ -6,9 +6,19 @@
   const completeName = ref('')
   const month = ref('')
   const year = ref('')
+  const cardSaved = ref(false)
 
-  const saveCard = () => {
-    console.log('oi');
+  const saveCard = () =>   cardSaved.value = !cardSaved.value
+  const backToCardForm = () => {
+    clearForm()
+    cardSaved.value = !cardSaved.value
+  } 
+  const clearForm = () => {
+    cvc.value = ''
+    cardNumber.value = ''
+    completeName.value = ''
+    month.value = ''
+    year.value = ''
   }
 </script>
 
@@ -34,7 +44,7 @@
       </div>
     </div>
   </header>
-  <main>
+  <main :class="{card_saved: cardSaved}">
     <form @submit.prevent="saveCard">
       <label>
         Cardholder Name
@@ -57,14 +67,15 @@
           <input class="input_cvc" type="text" v-model="cvc" placeholder="e.g. 123" maxlength="3">
         </label>
       </div>
-      <button>Confirm</button>
+      <button type="submit">Confirm</button>
     </form>
   </main>
 
-  <section hidden>
-      Thank you!
-      We've added your card details
-      Continue
+  <section class="continue" :hidden=!cardSaved>
+    <img class="complete_icon" src="./assets/images/icon-complete.svg" alt="complete icon">
+      <h1>Thank you!</h1>
+      <p>We've added your card details</p>
+      <button type="button" @click="backToCardForm">Continue</button>
   </section>
 
   <footer class="attribution">
@@ -203,6 +214,37 @@
   footer {
     position: absolute;
     bottom: 1em;
+  }
+  section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .complete_icon {
+    margin-top: 18em;
+    width: 4em;
+  }
+  h1, p {
+    width: fit-content;
+  }
+  h1 {
+    text-transform: uppercase;
+    margin-top: 1em;
+    margin-bottom: 0.8em;
+    letter-spacing: 0.2em;
+    color: var(--very-dark-violet);
+  }
+  p {
+    color: var( --dark-grayish-violet);
+    font-size: 17px;
+  }
+  section button {
+    width: 90%;
+    max-width: 25em;
+    margin-top: 2.5em;
+  }
+  .card_saved {
+    display: none;
   }
   .attribution { font-size: 11px; text-align: center; }
   .attribution a { color: hsl(228, 45%, 44%); }
