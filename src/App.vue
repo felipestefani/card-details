@@ -10,10 +10,6 @@
   const saveCard = () => {
     console.log('oi');
   }
-
-  const insertCvc = () => {
-    cvc.value.length <= 1 ? cvc.value = cvc.value + '00' : console.log(cvc.value);
-  }
 </script>
 
 <template>
@@ -78,12 +74,9 @@
 </template>
 
 <style scoped>
-  .header{
-    position: relative;
-  }
   .header_mobile_img {
-    min-height: 15em;
-    max-height: 15em;
+    height: 15em;
+    width: 100%;
   }
   .card{
     margin-top: -13em;
@@ -93,16 +86,29 @@
   }
   .back_card, .front_card {
     position: relative;
-    width: 100%;
     max-width:  18em;
-    margin-right: -4em;
-    max-height: 14em;
+  }
+  .back_card_img {
+    position: absolute;
+    left: 1.8em;
+  }
+  .front_card_img{
+    position: absolute;
+    top: 5.6em;
+    right: 1.8em;
   }
   .card_logo {
     position: absolute;
     width: 4em;
-    left: 1em;
-    top: 1em;
+    left: -0.6em;
+    top: 7em;
+  }
+    input {
+    margin: 0.6em 0 1.5em;
+    padding: 1em;
+    border: none;
+    border: 1px solid var(--light-grayish-violet);
+    border-radius: 8px;
   }
   .cvc, .complete_name, .card_number, .month, .year, .divisor {
     position: absolute;
@@ -114,30 +120,37 @@
   }
   .cvc {
     top: 5.5em;
-    left: 22em;
+    width: 5em;
+    left: 25em;
   }
   .card_number{
-    left: 0.2em;
-    top: 3.7em;
+    left: -1.5em;
+    top: 9em;
     font-size: 17px;
     letter-spacing: 0.2em;
   }
   .complete_name, .month, .year, .divisor {
     text-transform: uppercase;
-    top: 11em;
+    top: 20em;
     left: 1em;
   }
+  .complete_name{
+    width: 20em;
+    left: -1.8em;
+  }
   .month {
-    left: 21.8em;
+    left: 19em;
+    width: 5em;
   }
   .divisor{
-    left: 24.3em;
-    top: 12.5em;
+    left: 21.5em;
+    top: 21.5em;
+    width: 1em;
   }
   .year{
-    left: 23.8em
+    width: 5em;
+    left: 21em
   }
-
   .cvc::placeholder, .complete_name::placeholder, .month::placeholder, .year::placeholder{
     color: var(--white);
     font-size: 10px;
@@ -147,12 +160,10 @@
     font-size: 18px;
     letter-spacing: 0.1em;
   }
-  .front_card {
-    margin: -4.55em 4em 0 0;
-  }
   main{
     display: flex;
     justify-content: center;
+    margin-top: 16.5em;
   }
   form{
     width: 90%;
@@ -164,13 +175,6 @@
     letter-spacing: 0.15em;
     font-size: 12px;
   }
-  input {
-    margin: 0.6em 0 1.5em;
-    padding: 1em;
-    border: none;
-    border: 1px solid var(--light-grayish-violet);
-    border-radius: 8px;
-  }
   input::placeholder {
     color: var(--light-grayish-violet);
     font-size: 18px;
@@ -180,8 +184,8 @@
   }
   .month_year_input{
     display: flex;
-    padding-right: 1.5em;
-    gap: 1em;
+    padding-right: 1em;
+    gap: 0.6em;
     width: 100%;
   }
   .label_cvc {
