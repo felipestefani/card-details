@@ -31,9 +31,29 @@
     cardLength > 5 && cardLength <= 10 && e.inputType == 'deleteContentBackward' ? cardNumber.value = bl1 + cardNumber.value.substring(5,9) : null
     cardLength > 10 && cardLength <= 15 && e.inputType == 'deleteContentBackward' ? cardNumber.value = bl1 + bl2 + cardNumber.value.substring(10,14) : null
   }
+  const checkChange = el => {
+    const id = el.target.id
+    if(el.key === 'Enter') return
+    id === 'complete_name' ? completeNameInvalid.value = false : 
+    id === 'card_number' && cardNumber.value.length == 19 ? document.getElementById('month').focus() : 
+    id === 'card_number' ? cardNumberInvalid.value = false : 
+    id === 'month' && month.value.length == 2 ? document.getElementById('year').focus() : 
+    id === 'month' ? monthInvalid.value = false : 
+    id === 'year' ? yearInvalid.value = false : 
+    id === 'cvc' ? cvcInvalid.value = false : ''
+  }
+  const isValidName = () => completeName.value.length < 2 ? completeNameInvalid.value = true : ''
+  const isValidCardNumber = () => cardNumber.value.length !== 19 ? cardNumberInvalid.value = true : ''
+  const isMonthInvalid = () => month.value.length < 2 ? monthInvalid.value = true : ''
+  const isYearInvalid = () => year.value.length < 2 ? yearInvalid.value = true : ''
+  const isCvcInvalid = () => cvc.value.length < 3 ? cvcInvalid.value = true : ''
   const saveCard = () => {
-    if (cvc.value.length!==3) return
-    if (month.value.length!==2) return
+    isValidName()
+    isValidCardNumber()
+    isMonthInvalid()
+    isYearInvalid()
+    isCvcInvalid()
+    if(completeNameInvalid.value || cardNumberInvalid.value || monthInvalid.value || yearInvalid.value || cvcInvalid.value) return
     cardSaved.value = !cardSaved.value
   }
   const backToCardForm = () => {
@@ -75,23 +95,27 @@
     <form @submit.prevent="saveCard">
       <label>
         Cardholder Name
-        <input type="text" v-model="completeName" placeholder="e.g. Jane Appleseed">
+        <input id="complete_name" :class="{input_error: completeNameInvalid}" type="text" v-model="completeName" placeholder="e.g. Jane Appleseed" @keyup="checkChange">
+        <span v-if="completeNameInvalid" class="error">Isert a valid name</span>
       </label>
       <label>
         Card Number
-        <input type="text" v-model="cardNumber" placeholder="e.g. 1234 5678 9123 0000" maxlength="19" pattern="^\d{4}\s\d{4}\s\d{4}\s\d{4}$" @input="formatCardNumber" >
+        <input id="card_number" type="text" :class="{input_error: cardNumberInvalid}" v-model="cardNumber" placeholder="e.g. 1234 5678 9123 0000" maxlength="19" @input="formatCardNumber" @keyup="checkChange" >
+        <span class="error" v-if="cardNumberInvalid">Isert the correct card number</span>
       </label>
       <div class="exp_date">
         <label class="month_year">
           Exp date (MM/YY)
           <div class="month_year_input">
-            <input class="input_month" type="text" v-model="month" placeholder="MM" maxlength="2" @input="formatMonth">
-            <input class="input_year" type="text" v-model="year" placeholder="YY" maxlength="2" @input="formatYear">
+            <input id="month" :class="{input_error: monthInvalid}" class="input_month" type="text" v-model="month" placeholder="MM" maxlength="2" @input="formatMonth" @keyup="checkChange">
+            <input id="year" :class="{input_error: yearInvalid}" class="input_year" type="text" v-model="year" placeholder="YY" maxlength="2" @input="formatYear" @keyup="checkChange">
           </div>
+          <span class="error" v-if="monthInvalid || yearInvalid">All fields required</span>
         </label>
         <label class="label_cvc">
           Cvc
-          <input class="input_cvc" type="text" v-model="cvc" placeholder="e.g. 123" maxlength="3" @input="formatCvc">
+          <input id="cvc" :class="{input_error: cvcInvalid}" class="input_cvc" type="text" v-model="cvc" placeholder="e.g. 123" maxlength="3" @input="formatCvc" @keyup="checkChange">
+          <span class="error" v-if="cvcInvalid">Isert the correct cvc</span>
         </label>
       </div>
       <button type="submit">Confirm</button>
@@ -212,6 +236,8 @@
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-size: 12px;
+    display: flex;
+    flex-direction: column;
   }
   input::placeholder {
     color: var(--light-grayish-violet);
@@ -270,9 +296,23 @@
     max-width: 25em;
     margin-top: 2.5em;
   }
+  .error{
+    font-size: 11px;
+    color: var(--red);
+    margin: -1em 0 1.5em;
+    text-transform:none;
+    letter-spacing: 0em;
+  }
+  .input_error {
+    border-color: var(--red);
+  }
   .card_saved {
     display: none;
   }
   .attribution { font-size: 11px; text-align: center; }
   .attribution a { color: hsl(228, 45%, 44%); }
+
+  input:focus {
+    outline: none;
+  }
 </style>
