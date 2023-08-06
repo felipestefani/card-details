@@ -54,11 +54,11 @@
     isYearInvalid()
     isCvcInvalid()
     if(completeNameInvalid.value || cardNumberInvalid.value || monthInvalid.value || yearInvalid.value || cvcInvalid.value) return
-    cardSaved.value = !cardSaved.value
+    cardSaved.value = true
   }
   const backToCardForm = () => {
     clearForm()
-    cardSaved.value = !cardSaved.value
+    cardSaved.value = false
   } 
   const clearForm = () => {
     cvc.value = ''
@@ -122,7 +122,7 @@
     </form>
   </main>
 
-  <section class="continue" :hidden=!cardSaved>
+  <section class="continue" :class="{card_saved: !cardSaved}">
     <img class="complete_icon" src="./assets/images/icon-complete.svg" alt="complete icon">
       <h1>Thank you!</h1>
       <p>We've added your card details</p>
@@ -165,7 +165,7 @@
     left: -0.6em;
     top: 7em;
   }
-    input {
+  input {
     margin: 0.6em 0 1.5em;
     padding: 1em;
     border: none;
@@ -190,6 +190,7 @@
     top: 9em;
     font-size: 17px;
     letter-spacing: 0.2em;
+    width: 16em;
   }
   .complete_name, .month, .year, .divisor {
     text-transform: uppercase;
@@ -304,7 +305,7 @@
     letter-spacing: 0em;
   }
   .input_error {
-    border-color: var(--red);
+    border-color: var(--red) !important;
   }
   .card_saved {
     display: none;
@@ -312,7 +313,15 @@
   .attribution { font-size: 11px; text-align: center; }
   .attribution a { color: hsl(228, 45%, 44%); }
 
+  input:hover {
+    cursor: pointer;
+  }
+
   input:focus {
     outline: none;
+    background: linear-gradient(white, white) padding-box,
+                linear-gradient(to right,hsl(249, 99%, 64%), hsl(278, 94%, 30%)) border-box;
+    border-radius: 8px;
+    border: 1px solid transparent;
   }
 </style>
