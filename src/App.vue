@@ -2,13 +2,40 @@
   import { ref } from "vue";
 
   const cvc = ref('')
+  const cvcInvalid = ref(false)
   const cardNumber = ref('')
+  const cardNumberInvalid = ref(false)
   const completeName = ref('')
+  const completeNameInvalid = ref(false)
   const month = ref('')
+  const monthInvalid = ref(false)
   const year = ref('')
+  const yearInvalid = ref(false)
   const cardSaved = ref(false)
 
-  const saveCard = () =>   cardSaved.value = !cardSaved.value
+  const formatCvc = e => cvc.value  = e.target.value.replace(/\D/g, '')
+  const formatMonth = e => month.value  = e.target.value.replace(/\D/g, '')
+  const formatYear = e => year.value  = e.target.value.replace(/\D/g, '')
+  const formatCardNumber = e => {
+    const cardLength = cardNumber.value.length
+    cardNumber.value  = e.target.value.replace(/\D/g, '')
+    let bl1 = cardNumber.value.substring(0,4)
+    let bl2 = cardNumber.value.substring(4,8)
+    let bl3 = cardNumber.value.substring(8,12)
+    let bl4 = cardNumber.value.substring(12,16)
+    bl1.length == 4 ? bl1 = bl1 + ' ' : null
+    bl2.length == 4 ? bl2 = bl2 + ' ' : null
+    bl3.length == 4 ? bl3 = bl3 + ' ' : null
+    cardNumber.value = bl1 + bl2 + bl3 + bl4
+    cardLength <= 5 && e.inputType == 'deleteContentBackward' ? cardNumber.value = cardNumber.value.substring(0,4) : null
+    cardLength > 5 && cardLength <= 10 && e.inputType == 'deleteContentBackward' ? cardNumber.value = bl1 + cardNumber.value.substring(5,9) : null
+    cardLength > 10 && cardLength <= 15 && e.inputType == 'deleteContentBackward' ? cardNumber.value = bl1 + bl2 + cardNumber.value.substring(10,14) : null
+  }
+  const saveCard = () => {
+    if (cvc.value.length!==3) return
+    if (month.value.length!==2) return
+    cardSaved.value = !cardSaved.value
+  }
   const backToCardForm = () => {
     clearForm()
     cardSaved.value = !cardSaved.value
@@ -30,13 +57,13 @@
       <div class="card">
         <div class="back_card">
           <img src="./assets/images/bg-card-back.png" alt="" class="back_card_img">
-          <input type="text" class="cvc" v-model="cvc" placeholder="000" disabled>
+          <input type="text" class="cvc" :value="cvc.padEnd(3,'0')" placeholder="000" disabled>
         </div>
         <div class="front_card">
           <img src="./assets/images/bg-card-front.png" alt="front card image" class="front_card_img">
           <img src="./assets/images/card-logo.svg" alt="card logo" class="card_logo">
           <input type="text" class="complete_name" v-model="completeName" placeholder="Jane Appleseed" disabled>
-          <input type="text" class="card_number" v-model="cardNumber" placeholder="0000 0000 0000 0000" disabled>
+          <input type="text" class="card_number" v-model="cardNumber" placeholder="0000 0000 0000 0000" disabled @input="formatCardNumber">
           <input type="text" class="month" v-model="month" placeholder="00" disabled>
           <span class="divisor">/</span>
           <input type="text" class="year" v-model="year" placeholder="00" disabled>
@@ -52,19 +79,19 @@
       </label>
       <label>
         Card Number
-        <input type="text" v-model="cardNumber" placeholder="e.g. 1234 5678 9123 0000" maxlength="12">
+        <input type="text" v-model="cardNumber" placeholder="e.g. 1234 5678 9123 0000" maxlength="19" pattern="^\d{4}\s\d{4}\s\d{4}\s\d{4}$" @input="formatCardNumber" >
       </label>
       <div class="exp_date">
         <label class="month_year">
           Exp date (MM/YY)
           <div class="month_year_input">
-            <input class="input_month" type="text" v-model="month" placeholder="MM" maxlength="2">
-            <input class="input_year" type="text" v-model="year" placeholder="YY" maxlength="2">
+            <input class="input_month" type="text" v-model="month" placeholder="MM" maxlength="2" @input="formatMonth">
+            <input class="input_year" type="text" v-model="year" placeholder="YY" maxlength="2" @input="formatYear">
           </div>
         </label>
         <label class="label_cvc">
           Cvc
-          <input class="input_cvc" type="text" v-model="cvc" placeholder="e.g. 123" maxlength="3">
+          <input class="input_cvc" type="text" v-model="cvc" placeholder="e.g. 123" maxlength="3" @input="formatCvc">
         </label>
       </div>
       <button type="submit">Confirm</button>
@@ -133,7 +160,7 @@
     top: 5.5em;
     width: 5em;
     left: 25em;
-  }
+  } 
   .card_number{
     left: -1.5em;
     top: 9em;
