@@ -124,10 +124,12 @@
   </main>
 
   <section class="continue" :class="{card_saved: !cardSaved}">
+    <div class="continue_container">
     <img class="complete_icon" src="./assets/images/icon-complete.svg" alt="complete icon">
       <h1>Thank you!</h1>
       <p>We've added your card details</p>
       <button type="button" @click="backToCardForm">Continue</button>
+    </div>
   </section>
 
   <footer class="attribution">
@@ -276,6 +278,11 @@
   }
   section {
     display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .continue_container {
+    display: flex;
     flex-direction: column;
     align-items: center;
   }
@@ -341,7 +348,7 @@
     }
     .header_desktop_img {
       display: block;
-      min-height: 100vh;
+      height: 100vh;
     }
     .header_mobile_img {
       display: none;
@@ -419,6 +426,19 @@
     button {
       margin-top: 1em;
       width: 90%;
+    }
+    section{
+      justify-content: flex-start;
+    }
+    .continue_container {
+      width: fit-content;
+      padding-left: 4em;
+    }
+    .complete_icon {
+      margin-top: 0em;
+    }
+    section button {
+      min-width: 22em;
     }
   }
 
@@ -514,6 +534,12 @@
     button {
       margin-top: 1em;
       width: 90%;
+    }
+    .complete_icon{
+      margin-top: 0em;
+    }
+    section button {
+      width: 80%;
     }
   }
 </style>
