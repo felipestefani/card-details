@@ -70,10 +70,11 @@
 </script>
 
 <template>
+  <div class="container">
   <header>
     <div class="header">
       <img class="header_mobile_img" src="./assets/images/bg-main-mobile.png" alt="background mobile">
-      <img class="header_desktop_img" src="./assets/images/bg-main-desktop.png" alt="header background image" hidden>
+      <img class="header_desktop_img" src="./assets/images/bg-main-desktop.png" alt="header background image">
       <div class="card">
         <div class="back_card">
           <img src="./assets/images/bg-card-back.png" alt="" class="back_card_img">
@@ -133,12 +134,16 @@
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
     Coded by <a href="#">Your Name Here</a>.
   </footer>
+</div>
 </template>
 
 <style scoped>
   .header_mobile_img {
     height: 15em;
     width: 100%;
+  }
+  .header_desktop_img {
+    display: none;
   }
   .card{
     margin-top: -13em;
@@ -323,5 +328,192 @@
                 linear-gradient(to right,hsl(249, 99%, 64%), hsl(278, 94%, 30%)) border-box;
     border-radius: 8px;
     border: 1px solid transparent;
+  }
+
+  @media (min-width: 1100px) {
+    .container{
+      display: flex;
+      min-height: 100vh;
+    }
+    .header{
+      width: 60%;
+      min-height: 100vh;
+    }
+    .header_desktop_img {
+      display: block;
+      min-height: 100vh;
+    }
+    .header_mobile_img {
+      display: none;
+    }
+    .card {
+      margin-top: -30em;
+    }
+    .front_card, .back_card {
+      max-width: none;
+      width:25em;
+    }
+    .front_card {
+      top: -18em;
+      left: 10em;
+    }
+    .back_card{
+      top: 3.5em;
+      left: 11em;
+    }
+    .card_number::placeholder {
+      font-size: 25px;
+    }
+    .cvc::placeholder, .complete_name::placeholder, .month::placeholder, .year::placeholder {
+      font-size: 14px;
+    }
+    .cvc, .complete_name, .month, .year{
+      font-size: 14px;
+    }
+    .cvc {
+      top: 5.5em;
+      left: 24em;
+    }
+    .card_number{
+      top: 11em;
+      width: 22em;
+      left: -1em;
+    }
+    .complete_name, .month, .year {
+      top: 17em;
+      left: -1em;
+    }
+    .month{
+      left: 20em;
+    }
+    .divisor{
+      top: 26.2em;
+      left: 31.6em;
+    }
+    .year{
+      left: 22em;
+    }
+    main {
+      align-self: center;
+      margin-top: 0em;
+      justify-content: flex-start;
+      width: 100%;
+      padding-left: 2em;
+    }
+    form {
+      width: 90%;
+    }
+    label {
+      width: 90%;
+      font-size: 14px;
+    }
+    .exp_date{
+      width: 90%;
+    }
+    .month_year {
+      padding-right: 0.5em;
+    }
+    .label_cvc {
+      width: 100%;
+    }
+    button {
+      margin-top: 1em;
+      width: 90%;
+    }
+  }
+
+  @media (max-width: 1099px) and (min-width: 840px) {
+    .container{
+      display: flex;
+      min-height: 100vh;
+    }
+    .header{
+      width: 60%;
+      min-height: 100vh;
+    }
+    .header_desktop_img {
+      display: block;
+      min-height: 100vh;
+    }
+    .header_mobile_img {
+      display: none;
+    }
+    .card {
+      margin-top: -30em;
+    }
+    .front_card, .back_card {
+      max-width: none;
+      width:20em;
+    }
+    .front_card {
+      top: -16em;
+      left: 8em;
+    }
+    .back_card{
+      top: 2em;
+      left: 8em;
+    }
+    .card_number::placeholder {
+      font-size: 20px;
+    }
+    .cvc::placeholder, .complete_name::placeholder, .month::placeholder, .year::placeholder {
+      font-size: 12px;
+    }
+    .cvc, .complete_name, .month, .year{
+      font-size: 12px;
+    }
+    .cvc {
+      top: 5em;
+      left: 22.5em;
+    }
+    .card_number{
+      top: 9.5em;
+      width: 22em;
+      left: -1.2em;
+    }
+    .complete_name, .month, .year {
+      top: 17.3em;
+      left: -1.2em;
+    }
+    .month{
+      left: 18.3em;
+    }
+    .divisor{
+      top: 22.8em;
+      left: 25em;
+    }
+    .year{
+      left: 20.3em;
+    }
+    main {
+      align-self: center;
+      margin-top: 0em;
+      justify-content: flex-start;
+      width: 100%;
+      padding-left: 4em;
+    }
+    form {
+      width: 90%;
+    }
+    label {
+      width: 90%;
+      font-size: 12px;
+    }
+    input::placeholder {
+      font-size: 14px;
+    }
+    .exp_date{
+      width: 90%;
+    }
+    .month_year {
+      padding-right: 0.5em;
+    }
+    .label_cvc {
+      width: 100%;
+    }
+    button {
+      margin-top: 1em;
+      width: 90%;
+    }
   }
 </style>
